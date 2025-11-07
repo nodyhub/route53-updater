@@ -1,10 +1,9 @@
 services:
-
   route53-updater:
     build:
       context: .
       dockerfile: Dockerfile 
-    restart: always
+    restart: unless-stopped
     env_file:
       - route53.env
 
