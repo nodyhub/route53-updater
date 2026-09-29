@@ -121,7 +121,14 @@ update_record() {
   local record_type="$1"
   local ip_value="$2"
 
-  CHANGE_BATCH_FILE="$(mktemp /tmp/r53-update.XXXXXX.json)"
+  # Note: template must end in XXXXXX with nothing after it -- BusyBox's
+  # mktemp (used in the Alpine-based image) rejects suffixes like ".json"
+  # after the X's, unlike GNU mktemp.
+  CHANGE_BATCH_FILE="$(mktemp /tmp/r53-update.XXXXXX)"
+  if [ -z "$CHANGE_BATCH_FILE" ] || [ ! -f "$CHANGE_BATCH_FILE" ]; then
+    log "Failed to create temporary change-batch file."
+    return 1
+  fi
 
   jq -n \
     --arg name "$ROUTE53_DOMAIN_NAME" \
