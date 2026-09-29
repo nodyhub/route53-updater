@@ -22,7 +22,10 @@ ENTRYPOINT ["/usr/local/bin/run.sh"]
 #     when running the container (using  `docker run -e ...`).
 #  -  It's crucial to define them here as documentation for the user.
 ENV ROUTE53_HOSTED_ZONE_ID=""
-ENV ROUTE53_DOMAIN_NAME=""
+ENV ROUTE53_HOSTNAME=""
+ENV ROUTE53_DOMAIN=""
+ENV ROUTE53_TTL="600"
+ENV RECORD_TYPES="A"
 ENV AWS_ACCESS_KEY_ID=""
 ENV AWS_SECRET_ACCESS_KEY=""
 ENV AWS_DEFAULT_REGION=""
